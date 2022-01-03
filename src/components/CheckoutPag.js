@@ -4,9 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 //import CheckoutCard from "./CheckoutCard";
 import Total from "./Total";
-import products from "../product-data";
-import Product from "./Product";
+//import products from "../product-data";
+//import Product from "./Product";
 import CheckoutCard from "./CheckoutCard";
+import { useStateValue } from "../StateProvider"; //para consmir un dato
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckoutPag = () => {
   const classes = useStyles();
+  const [{ basket }, dispatch] = useStateValue(); //para consmir un dato
 
   function FormRow() {
     return (
       <React.Fragment>
-        {products.map((elemt) => (
+        {basket?.map((elemt) => (
           <Grid item xs={12} sm={8} md={6} lg={4}>
             <CheckoutCard key={elemt.id} productsCommerce={elemt} />
             {console.log(elemt.id)}

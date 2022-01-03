@@ -1,17 +1,20 @@
 import "./App.css";
-import Product from "./components/Product";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import CheckoutPag from "./components/CheckoutPag";
+import { Routes, BrowserRouter, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <CheckoutPag />
-      {/* <Products /> */}
-      {/* <Product /> */}
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/checkout-page" element={<CheckoutPag />} />
+          <Route path="/" element={<Products />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

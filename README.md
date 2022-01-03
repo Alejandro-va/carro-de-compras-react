@@ -6,3 +6,6 @@ npm install @material-ui/core
 
 formato de numeros
 npm i accounting
+
+para rutas
+npm i react-router-dom

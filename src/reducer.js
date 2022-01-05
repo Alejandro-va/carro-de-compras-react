@@ -10,7 +10,8 @@ export const actionTypes = {
 //ACUMULADOR(reduce):ejecuta una función reductora sobre cada elemento de un array, devolviendo como resultado un único valor.
 //array.reduce((acumulador, producto)=>precio producto + acumulador, 0)
 export const getBasketTotal = (basket) => {
-  basket?.reduce((amount, item) => item.price + amount, 0);
+  const suma = basket?.reduce((amount, item) => item.price + amount, 0);
+  return suma;
 };
 
 const reducer = (state, action) => {

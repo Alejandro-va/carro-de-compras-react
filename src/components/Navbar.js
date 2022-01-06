@@ -10,6 +10,9 @@ import { ShoppingCart } from "@material-ui/icons";
 import { Badge } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../StateProvider"; //para consmir un dato
+import { auth } from "../firebase";
+import { actionTypes } from "../reducer";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +36,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-  const [{ basket }, dispatch] = useStateValue(); //para consmir un dato
+  const [{ basket, user }, dispatch] = useStateValue(); //para consmir un dato
   const classes = useStyles();
+  const navigate = useNavigate();
+
+  const handleAuth = () => {
+    if (user) {
+      auth.signOut();
+      dispatch({
+        type: actionTypes.EMPTY_BASKET,
+        basket: [],
+      });
+      dispatch({
+        type: actionTypes.SET_USER,
+        user: null,
+      });
+      navigate("/");
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -52,12 +71,12 @@ export default function Navbar() {
           </Link>
           <div className={classes.grow} />
           <Typography variant="h6" color="textPrimary" component="p">
-            Hello Guest
+            Hello {user ? user.email : "Guest"}
           </Typography>
           <div className={classes.button}>
             <Link to="/signin">
-              <Button variant="outlined">
-                <strong>Sign In</strong>
+              <Button variant="outlined" onClick={handleAuth}>
+                <strong>{user ? "Sign out" : "Sign In"}</strong>
               </Button>
             </Link>
             <Link to="/checkout-page">

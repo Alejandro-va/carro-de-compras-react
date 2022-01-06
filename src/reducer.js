@@ -1,10 +1,13 @@
 export const initialState = {
   basket: [],
+  user: null,
 };
 
 export const actionTypes = {
   ADD_TO_BASKET: "ADD_TO_BASKET",
   REMOVE_ITEM: "REMOVE_ITEM",
+  SET_USER: "SET_USER",
+  EMPTY_BASKET: "EMPTY_BASKET",
 };
 
 //ACUMULADOR(reduce):ejecuta una función reductora sobre cada elemento de un array, devolviendo como resultado un único valor.
@@ -36,6 +39,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         basket: newBasket,
+      };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user,
+      };
+    case "EMPTY_BASKET":
+      return {
+        ...state,
+        basket: action.basket,
       };
     default:
       return state;

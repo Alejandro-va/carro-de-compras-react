@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 function Copyright() {
   return (
@@ -51,10 +52,21 @@ export default function SignIn() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const signup = (e) => {
+  const signin = (e) => {
     e.preventDefault();
+    console.log("exito");
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((item) => {
+        if (item) {
+          navigate("/");
+        }
+      })
+      .catch((err) => alert(err.message));
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -102,7 +114,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={signup}
+            onClick={signin}
           >
             Sign In
           </Button>

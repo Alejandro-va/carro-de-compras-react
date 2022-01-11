@@ -16,7 +16,12 @@ const Checkout = () => {
     setActivateStep((preActivateStep) => preActivateStep - 1);
 
   //componente FORM
-  const Form = () => (activateStep === 0 ? <AddressForm /> : <PaymentForm />);
+  const Form = () =>
+    activateStep === 0 ? (
+      <AddressForm nextStep={nextStep} />
+    ) : (
+      <PaymentForm backStep={backStep} />
+    );
 
   return (
     <>
@@ -26,7 +31,7 @@ const Checkout = () => {
             Checkout
           </Typography>
           {/* numero de paso */}
-          <Stepper activeStep={0} className={classes.stepper}>
+          <Stepper activeStep={activateStep} className={classes.stepper}>
             {steps.map((el) => (
               <Step key={el}>
                 <StepLabel>{el}</StepLabel>

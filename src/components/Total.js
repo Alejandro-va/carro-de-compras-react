@@ -3,6 +3,7 @@ import accounting from "accounting";
 import { Button, makeStyles } from "@material-ui/core";
 import { getBasketTotal } from "../reducer";
 import { useStateValue } from "../StateProvider"; //para consmir un dato
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,9 +28,15 @@ const Total = () => {
       <h5>{accounting.formatMoney(getBasketTotal(basket), "$")}</h5>
       {/* min 3.13 */}
 
-      <Button className={classes.button} variant="contained" color="secondary">
-        Check out
-      </Button>
+      <Link to="/checkout" style={{ textDecoration: "none" }}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+        >
+          Check out
+        </Button>
+      </Link>
     </div>
   );
 };

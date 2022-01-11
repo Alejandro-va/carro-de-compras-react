@@ -1,12 +1,33 @@
 import { Grid, Typography, Button, TextField } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import AddressInput from "./AddressInput";
+//import AddressInput from "./AddressInput";
 import { Link } from "react-router-dom";
 
-const AddressForm = () => {
-  const { handleSubmit, control } = useForm();
+//estas 2 lineas simpre qvasmo a usar dispatch
+import { useStateValue } from "../../StateProvider"; //para consmir un dato
+import { actionTypes } from "../../reducer";
+
+const AddressForm = ({ nextStep }) => {
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      address1: "",
+      email: "",
+      city: "",
+      postCode: "",
+    },
+  }); //tomo el valor del name de los input
+
+  const [{ shippingData }, dispatch] = useStateValue(); //para consmir un dato
+
   const onSubmit = (data) => {
-    console.log(data);
+    //console.log(data);
+    dispatch({
+      type: actionTypes.SET_SHIPPINGDATA,
+      shippingData: data,
+    });
+    nextStep();
   };
   return (
     <>
@@ -16,19 +37,78 @@ const AddressForm = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
-          <Controller
-            control={control}
-            render={({ field }) => (
-              <TextField fullWidth defaultValue="" name="ddd" label="ffff" />
-            )}
-          />
-          {/*        <AddressInput required name="firstName" label="First Name" />
-           <AddressInput required name="lastName" label="Last Name" />
-          <AddressInput required name="address1" label="Address" />
-          <AddressInput required name="email" label="Email Address" />
-          <AddressInput required name="city" label="City" />
-          <AddressInput required name="postCode" label="Post Code" /> */}
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="firstName"
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  label="firstName"
+                  /*  defaultValues="" */
+                  required
+                  {...field}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="lastName"
+              render={({ field }) => (
+                <TextField fullWidth label="Last Name" required {...field} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="address1"
+              render={({ field }) => (
+                <TextField fullWidth label="Address" required {...field} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  label="Email Address"
+                  required
+                  {...field}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="city"
+              render={({ field }) => (
+                <TextField fullWidth label="City" required {...field} />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Controller
+              control={control}
+              name="postCode"
+              render={({ field }) => (
+                <TextField fullWidth label="Post Code" required {...field} />
+              )}
+            />
+          </Grid>
         </Grid>
+
         <div
           style={{
             display: "flex",

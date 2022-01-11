@@ -1,6 +1,7 @@
 export const initialState = {
   basket: [],
   user: null,
+  shippingData: {},
 };
 
 export const actionTypes = {
@@ -8,17 +9,16 @@ export const actionTypes = {
   REMOVE_ITEM: "REMOVE_ITEM",
   SET_USER: "SET_USER",
   EMPTY_BASKET: "EMPTY_BASKET",
+  SET_SHIPPINGDATA: "SET_SHIPPINGDATA",
 };
 
 //ACUMULADOR(reduce):ejecuta una función reductora sobre cada elemento de un array, devolviendo como resultado un único valor.
 //array.reduce((acumulador, producto)=>precio producto + acumulador, 0)
-export const getBasketTotal = (basket) => {
-  const suma = basket?.reduce((amount, item) => item.price + amount, 0);
-  return suma;
-};
+export const getBasketTotal = (basket) =>
+  basket?.reduce((amount, item) => item.price + amount, 0);
 
 const reducer = (state, action) => {
-  console.log(action);
+  console.log("reducer", action);
   switch (action.type) {
     case "ADD_TO_BASKET":
       return {
@@ -49,6 +49,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         basket: action.basket,
+      };
+    case "SET_SHIPPINGDATA":
+      return {
+        ...state,
+        shippingData: action.shippingData,
       };
     default:
       return state;

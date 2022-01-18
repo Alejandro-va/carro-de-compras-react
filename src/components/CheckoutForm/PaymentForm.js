@@ -63,17 +63,19 @@ const CheckoutForm = ({ backStep, nextStep }) => {
     //console.log(paymentMethod);
     //amount requiere que las cantidaddes deçse envien en centimos, por eso lo multiplico por cien
     if (!error) {
+      console.log("s");
       const { id } = paymentMethod;
       try {
         const { data } = await axios.post(
           "http://localhost:3001/api/checkout",
           {
             //este objeto es el body q recibe el servidor como req.body
-            id: id,
+            id,
             amount: getBasketTotal(basket) * 100,
           }
         );
         //alert(data.message);
+        console.log("data", data);
         dispatch({
           type: actionTypes.SET_PAYMENT_MESSAGE,
           paymentMessage: data.message,
@@ -105,7 +107,7 @@ const CheckoutForm = ({ backStep, nextStep }) => {
           variant="contained"
           color="primary"
           type="submit"
-          disabled={false}
+          disabled={!stripe}
         >
           {`Pay ${accounting.formatMoney(getBasketTotal(basket), "$")}`}
         </Button>

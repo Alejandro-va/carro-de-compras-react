@@ -16,7 +16,7 @@ app.use(express.json()); //interpreta todos los json
 
 app.post("/api/checkout", async (req, res) => {
   console.log(req.body);
-  res.send("recibido");
+  //res.send("recibido");
   const { id, amount } = req.body; //desestruturo el body
   try {
     const payment = await stripe.paymentIntents.create({
@@ -29,7 +29,7 @@ app.post("/api/checkout", async (req, res) => {
     console.log(payment);
     return res.status(200).json({ message: "Successful payment" });
   } catch (error) {
-    //console.log(error);
+    // return console.log(error);
     return res.json({ message: error.raw.message });
   }
 });

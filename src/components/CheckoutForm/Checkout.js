@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Paper, Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 import AddressForm from "./AddressForm";
@@ -42,12 +42,13 @@ const Checkout = () => {
             ))}
           </Stepper>
           {/*Form componente hecho por mi arriba */}
+          {console.log("paymentMessage", paymentMessage)}
           {
             //si activateStep es igual al ultimo paso o numero
-            activateStep === Step.length ? (
+            activateStep === steps.length ? (
               <Confirmation message={paymentMessage} />
             ) : (
-              <Form step={activateStep} />
+              <Form /*  step={activateStep} */ />
             )
           }
         </Paper>
